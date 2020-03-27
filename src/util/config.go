@@ -8,16 +8,16 @@ import (
 
 type Conf struct {
 	QueryDirectory string `yaml:"query_directory"`
+	Port           string `yaml:"port"`
 }
-
 
 func (c *Conf) GetConf() *Conf {
 	yamlFile, err := ioutil.ReadFile("config.yaml")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = yaml.Unmarshal(yamlFile, c)
-	if err != nil {
+
+	if err = yaml.Unmarshal(yamlFile, c); err != nil {
 		fmt.Println(err.Error())
 	}
 	return c
