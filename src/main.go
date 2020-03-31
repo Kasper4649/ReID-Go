@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ReID-Go/src/controller"
-	"ReID-Go/src/middleware"
+	. "ReID-Go/src/controller"
+	. "ReID-Go/src/middleware"
 	"ReID-Go/src/util"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -11,20 +11,17 @@ import (
 
 var config util.Conf
 
-
-
 func main() {
 
 	r := gin.Default()
-	r.Use(middleware.ComputeCostTime)
+	r.Use(ComputeCostTime)
 	config.GetConf()
 
 	ReIDGroup := r.Group("/reid")
 	{
-		ReIDGroup.POST("/query", controller.Query)
-		ReIDGroup.POST("/search", controller.Search)
+		ReIDGroup.POST("/query", Query)
+		ReIDGroup.POST("/search", Search)
 	}
-
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "呵呵。",
@@ -36,4 +33,3 @@ func main() {
 		log.Fatalf("failed to serve: %v", err)
 	}
 }
-
