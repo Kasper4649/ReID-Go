@@ -7,8 +7,9 @@ import (
 )
 
 type Conf struct {
-	QueryDirectory string `yaml:"query_directory"`
-	Port           string `yaml:"port"`
+	QueryDirectory   string `yaml:"query_directory"`
+	GinServePort string `yaml:"gin_serve_port"`
+	GRPCServerAddress string `yaml:"grpc_server_address"`
 }
 
 func (c *Conf) GetConf() *Conf {

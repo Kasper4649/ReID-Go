@@ -10,5 +10,5 @@ func ComputeCostTime(c *gin.Context) {
 	start := time.Now()
 	c.Next()
 	cost := time.Since(start)
-	log.Println(cost)
+	log.Printf("func %s cost: %v", c.HandlerName(), cost)
 }

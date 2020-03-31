@@ -4,12 +4,14 @@ import (
 	"ReID-Go/src/controller"
 	"ReID-Go/src/middleware"
 	"ReID-Go/src/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
 var config util.Conf
+
+
 
 func main() {
 
@@ -29,8 +31,9 @@ func main() {
 		})
 	})
 
-	err := r.Run(":" + config.Port)
+	err := r.Run(":" + config.GinServePort)
 	if err != nil {
-		fmt.Printf("failed to serve: %v", err)
+		log.Fatalf("failed to serve: %v", err)
 	}
 }
+
