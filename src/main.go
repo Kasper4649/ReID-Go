@@ -2,12 +2,30 @@ package main
 
 import (
 	. "ReID-Go/src/controller"
+	_ "ReID-Go/src/docs"
 	. "ReID-Go/src/middleware"
 	"ReID-Go/src/util"
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"log"
 	"net/http"
 )
+
+// @title ReID API
+// @version 1.0
+// @description This is a ReID's server API.
+// @termsOfService https://:).moe
+
+// @contact.name Kasper
+// @contact.url https://kasper.moe
+// @contact.email me@Kasper.moe
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host 127.0.0.1:8080
+// @BasePath /api
 
 var config util.Conf
 
@@ -16,6 +34,8 @@ func main() {
 	r := gin.Default()
 	r.Use(ComputeCostTime)
 	config.GetConf()
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	ReIDGroup := r.Group("/reid")
 	{

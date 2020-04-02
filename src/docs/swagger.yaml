@@ -1,0 +1,80 @@
+basePath: /api
+host: 127.0.0.1:8080
+info:
+  contact:
+    email: me@Kasper.moe
+    name: Kasper
+    url: https://kasper.moe
+  description: This is a ReID's server API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://:).moe
+  title: ReID API
+  version: "1.0"
+paths:
+  /query:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 选取特定的行人
+      operationId: Query
+      parameters:
+      - description: 行人图片
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"message": "uploaded successfully"}'
+          schema:
+            type: string
+        "400":
+          description: '{"error": {}}'
+          schema:
+            type: string
+        "415":
+          description: '{"error": {}}'
+          schema:
+            type: string
+        "500":
+          description: '{"error": {}}'
+          schema:
+            type: string
+      summary: 选取特定的行人
+  /search:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 查找特定的行人
+      operationId: Search
+      parameters:
+      - description: 待查找视频
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"message": "searched successfully"}'
+          schema:
+            type: string
+        "400":
+          description: '{"error": {}}'
+          schema:
+            type: string
+        "415":
+          description: '{"error": {}}'
+          schema:
+            type: string
+        "500":
+          description: '{"error": {}}'
+          schema:
+            type: string
+      summary: 查找特定的行人
+swagger: "2.0"

@@ -17,6 +17,17 @@ import (
 
 var config util.Conf
 
+// @ID Search
+// @Summary 查找特定的行人
+// @Description 查找特定的行人
+// @Accept mpfd
+// @Produce json
+// @Param file formData file true "待查找视频"
+// @Success 200 {string} string "{"message": "searched successfully"}"
+// @Failure 400 {string} string "{"error": {}}"
+// @Failure 415 {string} string "{"error": {}}"
+// @Failure 500 {string} string "{"error": {}}"
+// @Router /search [post]
 func Search(c *gin.Context) {
 
 	file, fileHeader, err := c.Request.FormFile("file")
@@ -55,11 +66,22 @@ func Search(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": fmt.Sprintf("search successfully"),
+		"message": fmt.Sprintf("searched successfully"),
 		"output":  output,
 	})
 }
 
+// @ID Query
+// @Summary 选取特定的行人
+// @Description 选取特定的行人
+// @Accept mpfd
+// @Produce json
+// @Param files formData file true "行人图片"
+// @Success 200 {string} string "{"message": "uploaded successfully"}"
+// @Failure 400 {string} string "{"error": {}}"
+// @Failure 415 {string} string "{"error": {}}"
+// @Failure 500 {string} string "{"error": {}}"
+// @Router /query [post]
 func Query(c *gin.Context) {
 
 	config.GetConf()
