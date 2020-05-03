@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.6.1
 	github.com/go-openapi/spec v0.19.7 // indirect
 	github.com/go-openapi/swag v0.19.8 // indirect
+	github.com/go-redis/redis v6.15.7+incompatible // indirect
 	github.com/golang/protobuf v1.3.5
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/swaggo/gin-swagger v1.2.0

@@ -1,8 +1,8 @@
 package controller
 
 import (
-	pb "ReID-Go/src/message"
-	"ReID-Go/src/util"
+	pb "ReID-Go/message"
+	"ReID-Go/util"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"

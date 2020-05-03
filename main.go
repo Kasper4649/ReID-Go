@@ -1,10 +1,10 @@
 package main
 
 import (
-	. "ReID-Go/src/controller"
-	_ "ReID-Go/src/docs"
-	. "ReID-Go/src/middleware"
-	"ReID-Go/src/util"
+	. "ReID-Go/controller"
+	_ "ReID-Go/docs"
+	. "ReID-Go/middleware"
+	"ReID-Go/util"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
