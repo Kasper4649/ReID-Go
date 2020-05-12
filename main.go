@@ -1,15 +1,9 @@
 package main
 
 import (
-	. "ReID-Go/controller"
-	_ "ReID-Go/docs"
 	. "ReID-Go/middleware"
 	"ReID-Go/util"
 	"github.com/gin-gonic/gin"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
-	"log"
-	"net/http"
 )
 
 // @title ReID API
@@ -30,26 +24,11 @@ import (
 var config util.Conf
 
 func main() {
+	config.GetConf()
 
 	r := gin.Default()
 	r.Use(ComputeCostTime)
-	config.GetConf()
+	r = CollectRoute(r)
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	ReIDGroup := r.Group("/reid")
-	{
-		ReIDGroup.POST("/query", Query)
-		ReIDGroup.POST("/search", Search)
-	}
-	r.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, gin.H{
-			"message": "呵呵。",
-		})
-	})
-
-	err := r.Run(":" + config.GinServePort)
-	if err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+	panic(r.Run(":" + config.GinServePort))
 }
