@@ -27,7 +27,7 @@ func main() {
 	config.GetConf()
 
 	r := gin.Default()
-	r.Use(ComputeCostTime)
+	r.Use(ComputeCostTime, CORSMiddleware())
 	r = CollectRoute(r)
 
 	panic(r.Run(":" + config.GinServePort))
