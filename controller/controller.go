@@ -103,7 +103,7 @@ func Query(c *gin.Context) {
 
 	for _, file := range files {
 		if strings.HasPrefix(file.Header["Content-Type"][0], "image/") {
-			filePath := path.Join(config.QueryDirectory, "0001_c1s1_0_"+file.Filename)
+			filePath := path.Join(config.QueryDirectory, "0001_c1s1_000"+file.Filename+"_00.jpg")
 			if err = c.SaveUploadedFile(file, filePath); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{
 					"error": err.Error(),
