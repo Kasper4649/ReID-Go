@@ -139,7 +139,7 @@ func client(file []byte, filename string) ([]byte, error) {
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute*30)
 	defer cancel()
-	r, err := c.Search(ctx, &pb.SearchRequest{File: file, Name: filename})
+	r, err := c.Search(ctx, &pb.SearchRequest{ File: file, Name: filename })
 	if err != nil {
 		log.Fatalf("could not receive output: %v", err)
 		return nil, err
