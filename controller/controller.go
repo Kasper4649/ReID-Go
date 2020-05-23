@@ -38,7 +38,7 @@ func Search(c *gin.Context) {
 		return
 	}
 
-	var output []byte
+	var outputUrl string
 
 	if strings.HasPrefix(fileHeader.Header["Content-Type"][0], "video/") {
 
@@ -51,7 +51,7 @@ func Search(c *gin.Context) {
 		}
 
 		// 查找特定行人
-		if output, err = client(fileContent, fileHeader.Filename); err != nil {
+		if outputUrl, err = client(fileContent, fileHeader.Filename); err != nil {
 			c.JSON(http.StatusUnsupportedMediaType, gin.H{
 				"error": err,
 			})
@@ -67,7 +67,7 @@ func Search(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": fmt.Sprintf("searched successfully"),
-		"output":  output,
+		"url":  outputUrl,
 	})
 }
 
@@ -123,7 +123,7 @@ func Query(c *gin.Context) {
 	})
 }
 
-func client(file []byte, filename string) ([]byte, error) {
+func client(file []byte, filename string) (string, error) {
 	// Set up a connection to the server.
 	config.GetConf()
 	conn, err := grpc.Dial(config.GRPCServerAddress, grpc.WithInsecure(),
@@ -131,7 +131,7 @@ func client(file []byte, filename string) ([]byte, error) {
 			grpc.MaxCallSendMsgSize(60*1024*1024)))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
-		return nil, err
+		return "", err
 	}
 	defer conn.Close()
 	c := pb.NewSearchServiceClient(conn)
@@ -142,8 +142,8 @@ func client(file []byte, filename string) ([]byte, error) {
 	r, err := c.Search(ctx, &pb.SearchRequest{ File: file, Name: filename })
 	if err != nil {
 		log.Fatalf("could not receive output: %v", err)
-		return nil, err
+		return "", err
 	}
 
-	return r.GetFile(), nil
+	return r.GetUrl(), nil
 }
