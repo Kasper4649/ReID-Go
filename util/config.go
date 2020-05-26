@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 )
@@ -15,11 +14,11 @@ type Conf struct {
 func (c *Conf) GetConf() *Conf {
 	yamlFile, err := ioutil.ReadFile("config.yaml")
 	if err != nil {
-		fmt.Println(err.Error())
+		panic(err.Error())
 	}
 
 	if err = yaml.Unmarshal(yamlFile, c); err != nil {
-		fmt.Println(err.Error())
+		panic(err.Error())
 	}
 	return c
 }
