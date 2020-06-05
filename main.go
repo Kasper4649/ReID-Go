@@ -4,6 +4,7 @@ import (
 	. "ReID-Go/middleware"
 	"ReID-Go/util"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 // @title ReID API
@@ -21,14 +22,13 @@ import (
 // @host 127.0.0.1:8080
 // @BasePath /api
 
-var config util.Conf
 
 func main() {
-	config.GetConf()
+	util.InitConfig()
 
 	r := gin.Default()
 	r.Use(ComputeCostTime, CORSMiddleware())
 	r = CollectRoute(r)
 
-	panic(r.Run(":" + config.GinServePort))
+	panic(r.Run(":" + viper.GetString("server.port")))
 }

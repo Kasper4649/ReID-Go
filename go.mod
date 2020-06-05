@@ -10,6 +10,7 @@ require (
 	github.com/go-redis/redis v6.15.7+incompatible // indirect
 	github.com/golang/protobuf v1.3.5
 	github.com/mailru/easyjson v0.7.1 // indirect
+	github.com/spf13/viper v1.7.0
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.5
 	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e // indirect
@@ -17,5 +18,4 @@ require (
 	golang.org/x/tools v0.0.0-20200401192744-099440627f01 // indirect
 	google.golang.org/genproto v0.0.0-20200326112834-f447254575fd // indirect
 	google.golang.org/grpc v1.28.0
-	gopkg.in/yaml.v2 v2.2.8
 )

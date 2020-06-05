@@ -2,10 +2,10 @@ package controller
 
 import (
 	pb "ReID-Go/message"
-	"ReID-Go/util"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"io/ioutil"
 	"log"
@@ -15,7 +15,6 @@ import (
 	"time"
 )
 
-var config util.Conf
 
 // @ID Search
 // @Summary 查找特定的行人
@@ -41,7 +40,6 @@ func Search(c *gin.Context) {
 	var outputUrl string
 
 	if strings.HasPrefix(fileHeader.Header["Content-Type"][0], "video/") {
-
 		fileContent, err := ioutil.ReadAll(file)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -83,8 +81,6 @@ func Search(c *gin.Context) {
 // @Failure 500 {string} string "{"error": {}}"
 // @Router /query [post]
 func Query(c *gin.Context) {
-
-	config.GetConf()
 	form, err := c.MultipartForm()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -103,7 +99,7 @@ func Query(c *gin.Context) {
 
 	for _, file := range files {
 		if strings.HasPrefix(file.Header["Content-Type"][0], "image/") {
-			filePath := path.Join(config.QueryDirectory, "0001_c1s1_000"+file.Filename+"_00.jpg")
+			filePath := path.Join(viper.GetString("query.directory"), "0001_c1s1_000"+file.Filename+"_00.jpg")
 			if err = c.SaveUploadedFile(file, filePath); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{
 					"error": err.Error(),
@@ -125,8 +121,7 @@ func Query(c *gin.Context) {
 
 func client(file []byte, filename string) (string, error) {
 	// Set up a connection to the server.
-	config.GetConf()
-	conn, err := grpc.Dial(config.GRPCServerAddress, grpc.WithInsecure(),
+	conn, err := grpc.Dial(viper.GetString("grpc.address"), grpc.WithInsecure(),
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(60*1024*1024),
 			grpc.MaxCallSendMsgSize(60*1024*1024)))
 	if err != nil {
